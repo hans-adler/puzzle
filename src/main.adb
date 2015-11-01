@@ -1,25 +1,31 @@
-with puzzle_permutation; use puzzle_permutation;
-with puzzle_board; use puzzle_board;
+with puzzle_permutation;     use puzzle_permutation;
+with puzzle_board;           use puzzle_board;
 with puzzle_characteristics; use puzzle_characteristics;
-with puzzle_io;    use puzzle_io;
-with ada.text_io; use ada.text_io;
+with puzzle_io;              use puzzle_io;
+with Ada.Text_IO;            use Ada.Text_IO;
 
 procedure main is
 
-   b: board(0..3, 0..3);
-   p: permutation(0..15);
-   c: characteristics;
+   b : board (0 .. 3, 0 .. 3);
+   c : characteristics;
 
 begin
-   assign_random_position(b);
-   put(b);
---   transpose(b);
---   put(b);
-   update(b, c);
-   put(c.hor.mh);
-   new_line;
-   put(c.ver.mh);
-   new_line;
-   copy(b, p);
-   put((inversion_number(p)+2)/3);
-end;
+   for i in 1 .. 20 loop
+      assign_random_position (b);
+      --put (b);
+      update (b, c);
+      put (c.hor.mh);
+      Put (", ");
+      put (c.hor.i1);
+      Put (", ");
+      put (c.hor.i2);
+      New_Line;
+      put (c.ver.mh);
+      Put (", ");
+      put (c.ver.i1);
+      Put (", ");
+      put (c.ver.i2);
+      New_Line;
+      New_Line;
+   end loop;
+end main;

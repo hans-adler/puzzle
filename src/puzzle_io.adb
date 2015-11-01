@@ -1,64 +1,75 @@
-with ada.text_io; use ada.text_io;
-with ada.strings; use ada.strings;
-with ada.Strings.Fixed; use ada.strings.fixed;
-with ada.Characters.Handling; use ada.Characters.Handling;
+with Ada.Text_IO;             use Ada.Text_IO;
+with Ada.Strings;             use Ada.Strings;
+with Ada.Strings.Fixed;       use Ada.Strings.Fixed;
+with Ada.Characters.Handling; use Ada.Characters.Handling;
 with box_drawing;
 
 package body puzzle_io is
 
    package bd renames box_drawing;
 
-   function to_string(a: integer) return string is
+   function to_string (a : Integer) return String is
    begin
-      return trim(integer'Image(a), left);
-   end;
+      return Trim (Integer'image (a), Left);
+   end to_string;
 
-   procedure put(x: integer) is
+   procedure put (i : Integer) is
    begin
-      put(to_string(x));
-   end;
+      Put (to_string (i));
+   end put;
 
-   procedure put_line(length: integer; left, middle, right, horizontal: string) is
+   procedure put_line
+     (length                          : Integer;
+      left, middle, right, horizontal : String) is
    begin
-      put(left);
-      for i in 1..length-1 loop
-         put(horizontal);
-         put(horizontal);
-         put(middle);
+      Put (left);
+      for i in 1 .. length - 1 loop
+         Put (horizontal);
+         Put (horizontal);
+         Put (middle);
       end loop;
-      put(horizontal);
-      put(horizontal);
-      put(right);
-      new_line;
-   end;
+      Put (horizontal);
+      Put (horizontal);
+      Put (right);
+      New_Line;
+   end put_line;
 
-   procedure put(x: in board) is
+   procedure put (b : in board) is
    begin
-      put_line(x'Length(2), bd.dr, bd.ddlr, bd.dl, bd.lr);
-      for i in x'range(1) loop
-         put(bd.ud);
-         for j in x'range(2) loop
-            if (x(i,j) < 10) then
-               put(' ');
+      put_line (b'length (2), bd.dr, bd.ddlr, bd.dl, bd.lr);
+      for i in b'range (1) loop
+         Put (bd.ud);
+         for j in b'range (2) loop
+            if b (i, j) < 10 then
+               Put (' ');
             end if;
-            if x(i,j) = 0 then
-               put(' ');
+            if b (i, j) = 0 then
+               Put (' ');
             else
-               put(to_string(x(i,j)));
+               Put (to_string (b (i, j)));
             end if;
-            if j /= x'last(2) then
-               put(bd.uudd);
+            if j /= b'last (2) then
+               Put (bd.uudd);
             else
-               put(bd.ud);
+               Put (bd.ud);
             end if;
          end loop;
-         new_line;
-         if i /= x'last(1) then
-            put_line(x'Length(2), bd.udrr, bd.uuddllrr, bd.udll, bd.llrr);
+         New_Line;
+         if i /= b'last (1) then
+            put_line (b'length (2), bd.udrr, bd.uuddllrr, bd.udll, bd.llrr);
          else
-            put_line(x'Length(2), bd.ur, bd.uulr, bd.ul, bd.lr);
+            put_line (b'length (2), bd.ur, bd.uulr, bd.ul, bd.lr);
          end if;
       end loop;
-   end;
+   end put;
+
+   procedure put (p : in permutation) is
+   begin
+      for i in p'range loop
+         put (p (i));
+         put (" ");
+      end loop;
+      new_line;
+   end put;
 
 end puzzle_io;

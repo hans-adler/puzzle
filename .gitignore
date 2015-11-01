@@ -4,4 +4,10 @@
 # Ada Library Information
 *.ali
 
+# Whatever this is:
+*.npp
+
+# Executable
+*.exe
+
 /obj/
